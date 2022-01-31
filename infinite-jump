@@ -43,9 +43,17 @@ else
     
     Player.Chatted:Connect(function(message)
         if message == "ij enable" then 
+
             config..Enabled = true
+            print("[InfiniteJump] Enabled")
+
         elseif message == "ij disable" then 
+
             config..Enabled = false
+            print("[InfiniteJump] Disabled")
+            
         end
     end)
+
+    print("[InfiniteJump] Initialized!")
 end

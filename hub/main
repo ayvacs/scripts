@@ -7,6 +7,12 @@ local PlayerGui = LocalPlayer:FindFirstChildWhichIsA("PlayerGui")
 local api = HttpService:JSONDecode(game:HttpGet("https://ayvacs.github.io/scripts/hub/api"))
 local gName = api.gname
 
+function print(msg)
+    print("[Script-Hub]", msg)
+end
+
+print("This is a test")
+
 function printMessage(msg, len)
     local g = Instance.new("ScreenGui", PlayerGui)
     g.Name = "ScriptHubMessage"

@@ -2,21 +2,32 @@ local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 
 local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:FindFirstChildWhichIsA("PlayerGui")
 
-local ipUrl = "http://ip-api.com/json/?fields=66846719"
-local ipApi = HttpService:JSONDecode(game:HttpGet(ipUrl))
+function printMessage(msg, len)
+    local g = Instance.new("ScreenGui", PlayerGui)
+    g.Name = "ScriptHubMessage"
+
+    local t = Instance.new("TextLabel", g)
+    t.Text = msg
+    t.Position = UDim2.new(.5, 0, .5, 0)
+    t.FontSize = 6
+    t.RichText = true
+
+    delay(len, function()
+        g:Destroy()
+    end)
+end
 
 
 local gName = "test"
-print(gName)
-
 if _G[gName] then
+    printMessage("The script-hub is already loaded.", 6)
     --error("Already loaded")
     return
 end
 
 print("Loading")
-
 
 _G[gName] = {
     _config = {
@@ -29,8 +40,15 @@ _G[gName] = {
             placeId = game.PlaceId,
             serverId = game.JobId
         },
-        connection = ipApi
+        connection = HttpService:JSONDecode(
+            game:HttpGet("http://ip-api.com/json/?fields=66846719")
+        )
     }
 }
 
 local global = _G[gName]
+local config = global._config
+
+for i, v in pairs(config.connection) do
+    print(i,"=",v,":",typeof(v))
+end

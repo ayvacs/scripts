@@ -1,0 +1,16 @@
+-- ONLY used if the script-hub ever moves to a different domain which IS unlikely......,,,
+
+local g = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:FindFirstChildWhichIsA("PlayerGui"))
+g.Name = "ScriptHubMessage"
+
+local t = Instance.new("TextLabel", g)
+t.Text = [[
+    The script-hub has been updated, and the requested script cannot be found.
+    Please visit <b>https://github.com/ayvacs/scripts</b> for more info.
+]]
+t.Position = UDim2.new(.5, 0, .5, 0)
+t.FontSize = 6
+t.RichText = true
+
+wait(4)
+g:Destroy()

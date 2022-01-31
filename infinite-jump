@@ -1,12 +1,21 @@
+-- //////////////////////////////
+
+local api = HttpService:JSONDecode(game:HttpGet("https://ayvacs.github.io/scripts/hub/api"))
+local global = _G[api.gname]
+
+-- //////////////////////////////
+
+local config = global.InfiniteJump
+
 local Player = game:GetService("Players").LocalPlayer
 local UIS = game:GetService("UserInputService")
 
-if _G.AvesInfiniteJump then
+if config then
     warn("[InfiniteJump] You already injected IJ! Doing nothing.")
     return
 else
     print("[InfiniteJump] Loading...")
-    _G.AvesInfiniteJump = {
+    global.InfiniteJump = {
         Enabled = true,
         JumpHeight = 50
     }
@@ -19,13 +28,13 @@ else
     end
     
     UIS.InputBegan:connect(function(UserInput)
-        if not _G.AvesInfiniteJump.Enabled then return end
+        if not config.Enabled then return end
     
         if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
             Action(Player.Character.Humanoid, function(self)
                 if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
                     Action(self.Parent.HumanoidRootPart, function(self)
-                        self.Velocity = Vector3.new(0, _G.AvesInfiniteJump.JumpHeight, 0)
+                        self.Velocity = Vector3.new(0, config.JumpHeight, 0)
                     end)
                 end
             end)
@@ -34,9 +43,9 @@ else
     
     Player.Chatted:Connect(function(message)
         if message == "ij enable" then 
-            _G.AvesInfiniteJump.Enabled = true
+            config..Enabled = true
         elseif message == "ij disable" then 
-            _G.AvesInfiniteJump.Enabled = false
+            config..Enabled = false
         end
     end)
 end

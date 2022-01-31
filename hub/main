@@ -4,6 +4,9 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:FindFirstChildWhichIsA("PlayerGui")
 
+local api = HttpService:JSONDecode(game:HttpGet("https://ayvacs.github.io/scripts/hub/api"))
+local gName = api.gname
+
 function printMessage(msg, len)
     local g = Instance.new("ScreenGui", PlayerGui)
     g.Name = "ScriptHubMessage"
@@ -19,8 +22,6 @@ function printMessage(msg, len)
     end)
 end
 
-
-local gName = "test"
 if _G[gName] then
     printMessage("The script-hub is already loaded.", 6)
     --error("Already loaded")
@@ -48,7 +49,3 @@ _G[gName] = {
 
 local global = _G[gName]
 local config = global._config
-
-for i, v in pairs(config.connection) do
-    print(i,"=",v,":",typeof(v))
-end

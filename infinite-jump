@@ -15,11 +15,11 @@ if config then
     return
 else
     print("[InfiniteJump] Loading...")
+
     global.InfiniteJump = {
         Enabled = true,
         JumpHeight = 50
     }
-
 
     function Action(Object, Function)
         if Object ~= nil then
@@ -51,7 +51,7 @@ else
 
             config..Enabled = false
             print("[InfiniteJump] Disabled")
-            
+
         end
     end)
 

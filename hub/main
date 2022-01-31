@@ -1,0 +1,35 @@
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+
+local LocalPlayer = Players.LocalPlayer
+
+local ipApi = HttpService:JSONDecode(game:HttpGet("http://ip-api.com/json/?fields=66846719"))
+
+
+local gName = "test"
+print(gName)
+
+if _G[gName] then
+    --[[error("Already loaded")
+    return]]
+end
+
+print("Loading")
+
+
+_G[gName] = {
+    _config = {
+        player = {
+            name = LocalPlayer.Name,
+            uuid = LocalPlayer.UserId
+        },
+        place = {
+            gameId = game.GameId,
+            placeId = game.PlaceId,
+            serverId = game.JobId
+        },
+        connection = ipApi
+    }
+}
+
+local global = _G[gName]

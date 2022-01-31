@@ -1,16 +1,18 @@
--- ONLY used if the script-hub ever moves to a different domain which IS unlikely......,,,
+--[[
+    This script will only be used if i decide to buy a custom domain
+
+    But i'm broke, so probably never.
+]]
+
 
 local g = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:FindFirstChildWhichIsA("PlayerGui"))
 g.Name = "ScriptHubMessage"
 
 local t = Instance.new("TextLabel", g)
-t.Text = [[
-    The script-hub has been updated, and the requested script cannot be found.
-    Please visit <b>https://github.com/ayvacs/scripts</b> for more info.
-]]
+t.Text = "UMBRA | Moved!\n\n\nThe script hub has been updated, and as a result the requested script cannot be found.\nPlease visit <b>https://ayvacs.github.io/scripts</b> for more info.\n\nYou can update your scripts super quickly.\nJust change any occurences of <b>ayvacs.github.io</b> to <b>ayvacs.dev</b> in the script's code.\nThis message will stay on screen for 30 seconds so you can have time to update the script.\n\nSorry for the inconvenience!"
 t.Position = UDim2.new(.5, 0, .5, 0)
 t.FontSize = 6
 t.RichText = true
 
-wait(4)
+wait(30)
 g:Destroy()

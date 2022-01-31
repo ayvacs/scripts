@@ -56,3 +56,5 @@ _G[gName] = {
 
 local global = _G[gName]
 local config = global._config
+
+return _G[gName]

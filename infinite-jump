@@ -2,9 +2,9 @@ local Player = game:GetService("Players").LocalPlayer
 local UIS = game:GetService("UserInputService")
 
 if _G.IJ then
-    print("IJ is already loaded!")
+    error("IJ is already loaded!")
 else
-    print("Loading IJ")
+    warn("Loading IJ")
     _G.IJ = {
         Enabled = true,
         JumpHeight = 50

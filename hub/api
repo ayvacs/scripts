@@ -1,1 +1,14 @@
-{"gname":"TestLol"}
+{
+    "website": {
+        "url": "https://ayvacs.github.io/scripts/",
+        "hub": "https://ayvacs.github.io/scripts/hub/",
+        "hubApi": "https://ayvacs.github.io/scripts/hub/api/"
+    },
+    "hub": {
+        "url": "https://ayvacs.github.io/scripts/hub/",
+        "gname": "Ayvacs_ScriptHub"
+    },
+    "specialCode": {
+        "404": "error(\"[ERROR] You tried to load a script, but it doesn't exist. Please visit https://github.com/ayvacs/scripts and see if the script was renamed or deleted.\n\")"
+    }
+}

@@ -5,7 +5,7 @@ local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:FindFirstChildWhichIsA("PlayerGui")
 
 local api = HttpService:JSONDecode(game:HttpGet("https://ayvacs.github.io/scripts/hub/api"))
-local gName = api.gname
+local gName = api.hub.gname
 
 local console = {}
 function console.log(msg)

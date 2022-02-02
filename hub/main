@@ -12,7 +12,7 @@ function console.log(msg)
     print("[Script-Hub]", msg)
 end
 
-console.log("This is a test")
+console.log("Starting the script")
 
 function printMessage(msg, len)
     local g = Instance.new("ScreenGui", PlayerGui)
@@ -41,7 +41,8 @@ _G[gName] = {
     _config = {
         player = {
             name = LocalPlayer.Name,
-            uuid = LocalPlayer.UserId
+            uuid = LocalPlayer.UserId,
+            executed = {}
         },
         place = {
             gameId = game.GameId,

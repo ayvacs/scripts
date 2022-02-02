@@ -1,11 +1,18 @@
 -- //////////////////////////////
 
 local api = HttpService:JSONDecode(game:HttpGet("https://ayvacs.github.io/scripts/hub/api"))
+if not _G[api.gname] then
+    warn("[Script-Hub] Executing the main script first.")
+    loadstring(game:HttpGet("https://ayvacs.github.com/scripts/hub/main"))()
+end
+
 local global = _G[api.gname]
+local config = global.InfiniteJump or nil
+
+table.insert(global._config.player.executed, "InfiniteJump")
 
 -- //////////////////////////////
 
-local config = global.InfiniteJump
 
 local Player = game:GetService("Players").LocalPlayer
 local UIS = game:GetService("UserInputService")

@@ -1,66 +1,46 @@
--- //////////////////////////////
-
-local api = HttpService:JSONDecode(game:HttpGet("https://ayvacs.github.io/scripts/hub/api"))
-if not _G[api.gname] then
-    warn("[Script-Hub] Executing the main script first.")
-    loadstring(game:HttpGet("https://ayvacs.github.com/scripts/hub/main"))()
-end
-
-local global = _G[api.gname]
-local config = global.InfiniteJump or nil
-
-table.insert(global._config.player.executed, "InfiniteJump")
-
--- //////////////////////////////
-
-
 local Player = game:GetService("Players").LocalPlayer
 local UIS = game:GetService("UserInputService")
 
-if config then
-    warn("[InfiniteJump] You already injected IJ! Doing nothing.")
-    return
-else
-    print("[InfiniteJump] Loading...")
+_G.InfJump = {
+    Enabled = true,
+    JumpHeight = 50
+}
+local config = _G.InfJump
 
-    global.InfiniteJump = {
-        Enabled = true,
-        JumpHeight = 50
-    }
+print("[InfiniteJump] Loading...")
 
-    function Action(Object, Function)
-        if Object ~= nil then
-            Function(Object)
-        end
+function Action(Object, Function)
+    if Object ~= nil then
+        Function(Object)
     end
-    
-    UIS.InputBegan:connect(function(UserInput)
-        if not config.Enabled then return end
-    
-        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
-            Action(Player.Character.Humanoid, function(self)
-                if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
-                    Action(self.Parent.HumanoidRootPart, function(self)
-                        self.Velocity = Vector3.new(0, config.JumpHeight, 0)
-                    end)
-                end
-            end)
-        end
-    end)
-    
-    Player.Chatted:Connect(function(message)
-        if message == "ij enable" then 
-
-            config..Enabled = true
-            print("[InfiniteJump] Enabled")
-
-        elseif message == "ij disable" then 
-
-            config..Enabled = false
-            print("[InfiniteJump] Disabled")
-
-        end
-    end)
-
-    print("[InfiniteJump] Initialized!")
 end
+
+UIS.InputBegan:connect(function(UserInput)
+    if not config.Enabled then return end
+
+    if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+        Action(Player.Character.Humanoid, function(self)
+            if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                Action(self.Parent.HumanoidRootPart, function(self)
+                    self.Velocity = Vector3.new(0, config.JumpHeight, 0)
+                end)
+            end
+        end)
+    end
+end)
+
+Player.Chatted:Connect(function(message)
+    if message == "ij enable" then 
+
+        config.Enabled = true
+        print("[InfiniteJump] Enabled")
+
+    elseif message == "ij disable" then 
+
+        config.Enabled = false
+        print("[InfiniteJump] Disabled")
+
+    end
+end)
+
+print("[InfiniteJump] Initialized!")

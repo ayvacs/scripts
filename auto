@@ -1,0 +1,23 @@
+print("---------------------")
+
+-- filenames to ignore
+local ignore = {".gitignore", "404.html", "index.html"}
+
+local HttpService = game:GetService("HttpService")
+
+function download(url)
+    return game:HttpGet(url.download_url)
+end
+
+local contentsUrl = "https://api.github.com/repos/ayvacs/scripts/contents"
+local data = game:HttpGet(contentsUrl)
+local files = HttpService:JSONDecode(data)
+
+local count = 0
+for _, file in pairs(files) do
+    -- filter only files and only scripts w/o extensions
+    if not table.find(ignore, file.name) then
+        loadstring(download(file))()
+        count += 1
+    end
+end

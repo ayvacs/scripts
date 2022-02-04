@@ -12,18 +12,18 @@ local window2 = library:Window("LocalPlayer")
 local window3 = library:Window("Teleport Areas")
 
 window2:Slider("Walkspeed", 16, 120, 5, function(value)
-    PlayersCharacter.Humanoid.WalkSpeed = value
+    Character.Humanoid.WalkSpeed = value
 end)
 
 window2:Slider("JumpPower", 50, 300, 20, function(value)
-    PlayersCharacter.Humanoid.JumpPower = value
+    Character.Humanoid.JumpPower = value
 end)
 
 window2:Toggle("Noclip", false, function(boolrfq)
     getgenv().trfffffinketcs = boolrfq
     game:GetService("RunService").RenderStepped:Connect(function()
         if getgenv().trfffffinketcs then
-            game.Players.PlayersCharacter.Humanoid:ChangeState(11)
+            Character.Humanoid:ChangeState(11)
         end
     end)
 end)
@@ -477,8 +477,8 @@ window1:Box("FE Play Song", function(val52xue, focuslost)
                 ["R6"] = 154168543
             }
         };
-        local Target = game:GetService("Workspace").Main.LoadSoundsIntoHead;
-        for index, sound in pairs(game:service 'Players'.PlayersCharacter.Head:GetChildren()) do
+        local Target = workspace.Main.LoadSoundsIntoHead;
+        for index, sound in pairs(Character.Head:GetChildren()) do
             if sound:IsA 'Sound' then
                 sound:Destroy()
             end
@@ -507,9 +507,9 @@ window1:Toggle("Spam Boxes", false, function(a1acra)
         if getgenv().trin1eeeeeekets then
             for _, v in pairs(workspace.SupplyButtons:GetDescendants()) do
                 if v:IsA("TouchTransmitter") then
-                    firetouchinterest(game.Players.PlayersCharacter.HumanoidRootPart, v.Parent, 0) -- 0 is touch
+                    firetouchinterest(Character.HumanoidRootPart, v.Parent, 0) -- 0 is touch
                     wait()
-                    firetouchinterest(game.Players.PlayersCharacter.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+                    firetouchinterest(Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
                 end
             end
         end
@@ -535,7 +535,7 @@ window1:Button("0 Gravity Unanchored Things", function()
 
     for i, v in ipairs(workspace:GetDescendants()) do
         if v:IsA("Part") and v.Anchored == false then
-            if not (v:IsDescendantOf(game.Players.PlayersCharacter)) then
+            if not (v:IsDescendantOf(Character)) then
                 zeroGrav(v)
             end
         end
@@ -543,7 +543,7 @@ window1:Button("0 Gravity Unanchored Things", function()
 
     workspace.DescendantAdded:Connect(function(part)
         if part:IsA("Part") and part.Anchored == false then
-            if not (part:IsDescendantOf(game.Players.PlayersCharacter)) then
+            if not (part:IsDescendantOf(Character)) then
                 zeroGrav(part)
             end
         end
@@ -554,7 +554,7 @@ window1:Button("Bring Unanchored Bricks [E]", function()
 
     local UserInputService = game:GetService("UserInputService")
     local Mouse = LocalPlayer:GetMouse()
-    local Folder = Instance.new("Folder", game:GetService("Workspace"))
+    local Folder = Instance.new("Folder", workspace)
     local Part = Instance.new("Part", Folder)
     local Attachment1 = Instance.new("Attachment", Part)
     Part.Anchored = true
@@ -607,10 +607,10 @@ window1:Button("Bring Unanchored Bricks [E]", function()
             AlignPosition.Attachment1 = Attachment1
         end
     end
-    for _, v in next, game:GetService("Workspace"):GetDescendants() do
+    for _, v in next, workspace:GetDescendants() do
         ForcePart(v)
     end
-    game:GetService("Workspace").DescendantAdded:Connect(function(v)
+    workspace.DescendantAdded:Connect(function(v)
         ForcePart(v)
     end)
     UserInputService.InputBegan:Connect(function(Key, Chat)
@@ -735,25 +735,25 @@ window1:Button("Autofarm Gui", function()
 end)
 window3:Label("Teleport Area", Color3.fromRGB(127, 143, 166))
 window3:Button("Starting Zone", function()
-    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(49, 3, 198)
+    Character.HumanoidRootPart.CFrame = CFrame.new(49, 3, 198)
 end)
 window3:Button("Cashier Area", function()
-    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(48, 4, 80)
+    Character.HumanoidRootPart.CFrame = CFrame.new(48, 4, 80)
 end)
 window3:Button("Cook Area", function()
-    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(42, 4, 61)
+    Character.HumanoidRootPart.CFrame = CFrame.new(42, 4, 61)
 end)
 window3:Button("Manager Area", function()
-    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(37, 4, 3)
+    Character.HumanoidRootPart.CFrame = CFrame.new(37, 4, 3)
 end)
 window3:Button("Boxer Area", function()
-    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(55, 4, 31)
+    Character.HumanoidRootPart.CFrame = CFrame.new(55, 4, 31)
 end)
 window3:Button("Supplier Area", function()
-    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(8, 13, -1020)
+    Character.HumanoidRootPart.CFrame = CFrame.new(8, 13, -1020)
 end)
 window3:Button("Delivery Area", function()
-    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(64, 4, -17)
+    Character.HumanoidRootPart.CFrame = CFrame.new(64, 4, -17)
 end)
 
 library:Keybind("Tab")

@@ -1,22 +1,29 @@
-local library =
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/miroeramaa/TurtleLib/main/TurtleUiLib.lua"))()
+local Players = Players
+local LocalPlayer = Players.LocalPlaer
+local Character = LocalPlayer.Character
+
+
+
+
+--local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/miroeramaa/TurtleLib/main/TurtleUiLib.lua"))()
+local library = loadstring(game:HttpGet("https://ayvacs.github.io/scripts/turtlelib"))()
 local window1 = library:Window("Scripts")
 local window2 = library:Window("LocalPlayer")
 local window3 = library:Window("Teleport Areas")
 
 window2:Slider("Walkspeed", 16, 120, 5, function(value)
-    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = value
+    PlayersCharacter.Humanoid.WalkSpeed = value
 end)
 
 window2:Slider("JumpPower", 50, 300, 20, function(value)
-    game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = value
+    PlayersCharacter.Humanoid.JumpPower = value
 end)
 
 window2:Toggle("Noclip", false, function(boolrfq)
     getgenv().trfffffinketcs = boolrfq
     game:GetService("RunService").RenderStepped:Connect(function()
         if getgenv().trfffffinketcs then
-            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+            game.Players.PlayersCharacter.Humanoid:ChangeState(11)
         end
     end)
 end)
@@ -26,9 +33,9 @@ window1:Box("FE Play Song", function(val52xue, focuslost)
     if focuslost then
         getgenv().audioId = val52xue -- self explanatory
         getgenv().soundVolume = 10 -- up to 10
-        local userdata_1 = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Menu.Emotions;
-        local userdata_2 = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Menu.Emotions.ScrollingFrame.List;
-        local userdata_3 = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Menu.Emotions.ScrollingFrame.List
+        local userdata_1 = LocalPlayer.PlayerGui.MainGui.Menu.Emotions;
+        local userdata_2 = LocalPlayer.PlayerGui.MainGui.Menu.Emotions.ScrollingFrame.List;
+        local userdata_3 = LocalPlayer.PlayerGui.MainGui.Menu.Emotions.ScrollingFrame.List
                                .Template;
         local table_2 = {
             ["Name"] = 'Clap',
@@ -471,14 +478,14 @@ window1:Box("FE Play Song", function(val52xue, focuslost)
             }
         };
         local Target = game:GetService("Workspace").Main.LoadSoundsIntoHead;
-        for index, sound in pairs(game:service 'Players'.LocalPlayer.Character.Head:GetChildren()) do
+        for index, sound in pairs(game:service 'Players'.PlayersCharacter.Head:GetChildren()) do
             if sound:IsA 'Sound' then
                 sound:Destroy()
             end
         end
         Target:FireServer(table_1)
         wait(.75)
-        game:GetService("Players").LocalPlayer.PlayerGui.UIEvents.ListItemPressed:Fire(userdata_1, userdata_2,
+        LocalPlayer.PlayerGui.UIEvents.ListItemPressed:Fire(userdata_1, userdata_2,
             userdata_3, table_2);
     end
 end)
@@ -500,9 +507,9 @@ window1:Toggle("Spam Boxes", false, function(a1acra)
         if getgenv().trin1eeeeeekets then
             for _, v in pairs(workspace.SupplyButtons:GetDescendants()) do
                 if v:IsA("TouchTransmitter") then
-                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) -- 0 is touch
+                    firetouchinterest(game.Players.PlayersCharacter.HumanoidRootPart, v.Parent, 0) -- 0 is touch
                     wait()
-                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+                    firetouchinterest(game.Players.PlayersCharacter.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
                 end
             end
         end
@@ -528,7 +535,7 @@ window1:Button("0 Gravity Unanchored Things", function()
 
     for i, v in ipairs(workspace:GetDescendants()) do
         if v:IsA("Part") and v.Anchored == false then
-            if not (v:IsDescendantOf(game.Players.LocalPlayer.Character)) then
+            if not (v:IsDescendantOf(game.Players.PlayersCharacter)) then
                 zeroGrav(v)
             end
         end
@@ -536,7 +543,7 @@ window1:Button("0 Gravity Unanchored Things", function()
 
     workspace.DescendantAdded:Connect(function(part)
         if part:IsA("Part") and part.Anchored == false then
-            if not (part:IsDescendantOf(game.Players.LocalPlayer.Character)) then
+            if not (part:IsDescendantOf(game.Players.PlayersCharacter)) then
                 zeroGrav(part)
             end
         end
@@ -546,7 +553,7 @@ end)
 window1:Button("Bring Unanchored Bricks [E]", function()
 
     local UserInputService = game:GetService("UserInputService")
-    local Mouse = game:GetService("Players").LocalPlayer:GetMouse()
+    local Mouse = LocalPlayer:GetMouse()
     local Folder = Instance.new("Folder", game:GetService("Workspace"))
     local Part = Instance.new("Part", Folder)
     local Attachment1 = Instance.new("Attachment", Part)
@@ -557,13 +564,13 @@ window1:Button("Bring Unanchored Bricks [E]", function()
     local NetworkAccess = coroutine.create(function()
         settings().Physics.AllowSleep = false
         while game:GetService("RunService").RenderStepped:Wait() do
-            for _, Players in next, game:GetService("Players"):GetPlayers() do
-                if Players ~= game:GetService("Players").LocalPlayer then
+            for _, Players in next, Players:GetPlayers() do
+                if Players ~= LocalPlayer then
                     Players.MaximumSimulationRadius = 0
                     sethiddenproperty(Players, "SimulationRadius", 0)
                 end
             end
-            game:GetService("Players").LocalPlayer.MaximumSimulationRadius = math.pow(math.huge, math.huge)
+            LocalPlayer.MaximumSimulationRadius = math.pow(math.huge, math.huge)
             setsimulationradius(math.huge)
         end
     end)
@@ -620,7 +627,7 @@ end)
 window1:Button("Become Manager", function()
 
     -- vars
-    local Players = game:GetService("Players")
+    local Players = Players
     local player = Players.LocalPlayer
     local humanoid = player.Character.Humanoid
     local mteam = game:GetService("Teams").Manager
@@ -728,25 +735,25 @@ window1:Button("Autofarm Gui", function()
 end)
 window3:Label("Teleport Area", Color3.fromRGB(127, 143, 166))
 window3:Button("Starting Zone", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(49, 3, 198)
+    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(49, 3, 198)
 end)
 window3:Button("Cashier Area", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48, 4, 80)
+    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(48, 4, 80)
 end)
 window3:Button("Cook Area", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(42, 4, 61)
+    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(42, 4, 61)
 end)
 window3:Button("Manager Area", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(37, 4, 3)
+    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(37, 4, 3)
 end)
 window3:Button("Boxer Area", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(55, 4, 31)
+    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(55, 4, 31)
 end)
 window3:Button("Supplier Area", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8, 13, -1020)
+    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(8, 13, -1020)
 end)
 window3:Button("Delivery Area", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(64, 4, -17)
+    game.Players.PlayersCharacter.HumanoidRootPart.CFrame = CFrame.new(64, 4, -17)
 end)
 
 library:Keybind("Tab")

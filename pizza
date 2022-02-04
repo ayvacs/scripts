@@ -752,8 +752,9 @@ end)
 
 
 library:Keybind("Tab")
---[[
+
+
 game:GetService("StarterGui"):SetCore("SendNotification",{     
-Title = "Important!",     
-Text = "Ameicaa Was Here",
-Button1 = "LMAO",Button2 = "Noob",     Duration = 20, })
+Title = "   !",     
+Text = "script by @frogweezer on roblox :)",
+Button1 = "ok",     Duration = 20, })

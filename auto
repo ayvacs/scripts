@@ -1,8 +1,5 @@
 print("---------------------")
 
--- filenames to ignore
-local ignore = {".gitignore", "404.html", "index.html"}
-
 local HttpService = game:GetService("HttpService")
 
 function download(url)
@@ -15,9 +12,11 @@ local files = HttpService:JSONDecode(data)
 
 local count = 0
 for _, file in pairs(files) do
+
     -- filter only files and only scripts w/o extensions
-    if not table.find(ignore, file.name) then
+    if #string.split(file.name, ".") == 1 then
         loadstring(download(file))()
         count += 1
+        print("\""..file.name.."\"")
     end
 end

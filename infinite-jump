@@ -1,12 +1,15 @@
 local Player = game:GetService("Players").LocalPlayer
 local UIS = game:GetService("UserInputService")
 
-_G.InfJump = {
-    Enabled = true,
-    JumpHeight = 50
-}
-local config = _G.InfJump
+if not _G.InfJump then
+    _G.InfJump = {
+        Enabled = true,
+        JumpHeight = 50
+    }
+end
 
+
+local config = _G.InfJump
 print("[InfiniteJump] Loading...")
 
 function Action(Object, Function)

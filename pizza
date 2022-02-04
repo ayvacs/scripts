@@ -1,6 +1,17 @@
-local Players = Players
-local LocalPlayer = Players.LocalPlaer
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+local Teams = game:GetService("Teams")
+
+local LocalPlayer = Players.LocalPlayer
+local Mouse = LocalPlayer:GetMouse()
 local Character = LocalPlayer.Character
+local Humanoid = Character.Humanoid
+local HumanoidRootPart = Character.HumanoidRootPart
+
+local PlayerGui = LocalPlayer:FindFirstChildWhichIsA("PlayerGui")
+local MainGui = PlayerGui:WaitForChild("MainGui")
 
 
 
@@ -12,35 +23,37 @@ local window2 = library:Window("LocalPlayer")
 local window3 = library:Window("Teleport Areas")
 
 window2:Slider("Walkspeed", 16, 120, 5, function(value)
-    Character.Humanoid.WalkSpeed = value
+    Humanoid.WalkSpeed = value
 end)
 
 window2:Slider("JumpPower", 50, 300, 20, function(value)
-    Character.Humanoid.JumpPower = value
+    Humanoid.JumpPower = value
 end)
 
 window2:Toggle("Noclip", false, function(boolrfq)
     getgenv().trfffffinketcs = boolrfq
-    game:GetService("RunService").RenderStepped:Connect(function()
+    RunService.RenderStepped:Connect(function()
         if getgenv().trfffffinketcs then
-            Character.Humanoid:ChangeState(11)
+            Humanoid:ChangeState(11)
         end
     end)
 end)
-window1:Label("Server-Side 1", Color3.fromRGB(127, 143, 166))
 
+window1:Label("Server-Side 1", Color3.fromRGB(127, 143, 166))
 window1:Box("FE Play Song", function(val52xue, focuslost)
     if focuslost then
         getgenv().audioId = val52xue -- self explanatory
         getgenv().soundVolume = 10 -- up to 10
-        local userdata_1 = LocalPlayer.PlayerGui.MainGui.Menu.Emotions;
-        local userdata_2 = LocalPlayer.PlayerGui.MainGui.Menu.Emotions.ScrollingFrame.List;
-        local userdata_3 = LocalPlayer.PlayerGui.MainGui.Menu.Emotions.ScrollingFrame.List
-                               .Template;
+
+        local userdata_1 = MainGui.Menu.Emotions
+        local userdata_2 = MainGui.Menu.Emotions.ScrollingFrame.List
+        local userdata_3 = MainGui.Menu.Emotions.ScrollingFrame.List.Template
+
         local table_2 = {
             ["Name"] = 'Clap',
             ["GroupColor"] = 'Bright blue'
-        };
+        }
+
         local table_1 = {
             ["Sleep"] = {
                 ["SoundLooped"] = true,
@@ -476,24 +489,26 @@ window1:Box("FE Play Song", function(val52xue, focuslost)
                 ["R15"] = 4308387518,
                 ["R6"] = 154168543
             }
-        };
-        local Target = workspace.Main.LoadSoundsIntoHead;
-        for index, sound in pairs(Character.Head:GetChildren()) do
+        }
+
+        local Target = workspace.Main.LoadSoundsIntoHead
+        for _, sound in pairs(Character.Head:GetChildren()) do
             if sound:IsA 'Sound' then
                 sound:Destroy()
             end
         end
+
         Target:FireServer(table_1)
         wait(.75)
-        LocalPlayer.PlayerGui.UIEvents.ListItemPressed:Fire(userdata_1, userdata_2,
-            userdata_3, table_2);
+        PlayerGui.UIEvents.ListItemPressed:Fire(userdata_1, userdata_2, userdata_3, table_2);
     end
 end)
+
 window1:Toggle("FE Spam Sounds", false, function(State1)
     getgenv().hit = State1
     while wait() do
         if getgenv().hit then
-            for i, v in pairs(game.Workspace:GetDescendants()) do
+            for i, v in pairs(workspace:GetDescendants()) do
                 if v:IsA("Sound") then
                     v:Play()
                 end
@@ -501,15 +516,16 @@ window1:Toggle("FE Spam Sounds", false, function(State1)
         end
     end
 end)
+
 window1:Toggle("Spam Boxes", false, function(a1acra)
     getgenv().trin1eeeeeekets = a1acra
-    while wait(.10) do
+    while wait(.1) do
         if getgenv().trin1eeeeeekets then
             for _, v in pairs(workspace.SupplyButtons:GetDescendants()) do
                 if v:IsA("TouchTransmitter") then
-                    firetouchinterest(Character.HumanoidRootPart, v.Parent, 0) -- 0 is touch
+                    firetouchinterest(HumanoidRootPart, v.Parent, 0) -- 0 is touch
                     wait()
-                    firetouchinterest(Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+                    firetouchinterest(HumanoidRootPart, v.Parent, 1) -- 1 is untouch
                 end
             end
         end
@@ -519,12 +535,13 @@ end)
 window1:Button("0 Gravity Unanchored Things", function()
     spawn(function()
         while true do
-            game.Players.LocalPlayer.MaximumSimulationRadius = math.pow(math.huge, math.huge) * math.huge
-            game.Players.LocalPlayer.SimulationRadius = math.pow(math.huge, math.huge) * math.huge
-            game:GetService("RunService").Stepped:wait()
+            LocalPlayer.MaximumSimulationRadius = math.pow(math.huge, math.huge) * math.huge
+            LocalPlayer.SimulationRadius = math.pow(math.huge, math.huge) * math.huge
+            RunService.Stepped:wait()
         end
     end)
-    local function zeroGrav(part)
+
+    function zeroGrav(part)
         if part:FindFirstChild("BodyForce") then
             return
         end
@@ -551,9 +568,6 @@ window1:Button("0 Gravity Unanchored Things", function()
 end)
 
 window1:Button("Bring Unanchored Bricks [E]", function()
-
-    local UserInputService = game:GetService("UserInputService")
-    local Mouse = LocalPlayer:GetMouse()
     local Folder = Instance.new("Folder", workspace)
     local Part = Instance.new("Part", Folder)
     local Attachment1 = Instance.new("Attachment", Part)
@@ -563,7 +577,7 @@ window1:Button("Bring Unanchored Bricks [E]", function()
     local Updated = Mouse.Hit + Vector3.new(0, 5, 0)
     local NetworkAccess = coroutine.create(function()
         settings().Physics.AllowSleep = false
-        while game:GetService("RunService").RenderStepped:Wait() do
+        while RunService.RenderStepped:Wait() do
             for _, Players in next, Players:GetPlayers() do
                 if Players ~= LocalPlayer then
                     Players.MaximumSimulationRadius = 0
@@ -575,7 +589,7 @@ window1:Button("Bring Unanchored Bricks [E]", function()
         end
     end)
     coroutine.resume(NetworkAccess)
-    local function ForcePart(v)
+    function ForcePart(v)
         if v:IsA("Part") and v.Anchored == false and v.Parent:FindFirstChild("Humanoid") == nil and
             v.Parent:FindFirstChild("Head") == nil and v.Name ~= "Handle" then
             Mouse.TargetFilter = v
@@ -619,7 +633,7 @@ window1:Button("Bring Unanchored Bricks [E]", function()
         end
     end)
     spawn(function()
-        while game:GetService("RunService").RenderStepped:Wait() do
+        while RunService.RenderStepped:Wait() do
             Attachment1.WorldCFrame = Updated
         end
     end)
@@ -630,7 +644,7 @@ window1:Button("Become Manager", function()
     local Players = Players
     local player = Players.LocalPlayer
     local humanoid = player.Character.Humanoid
-    local mteam = game:GetService("Teams").Manager
+    local mteam = Teams.Manager
     local man = mteam:GetPlayers()[1]
     -- deletes a glitchy chair in the office (optional)
     if workspace:FindFirstChild("ExtraChair") and workspace.ExtraChair:FindFirstChild("Seat") then
@@ -640,12 +654,11 @@ window1:Button("Become Manager", function()
     if man then
         -- check if he's respawning or sitting
         local htxt
-        if man.Character == nil or man.Character:FindFirstChild("HumanoidRootPart") == nil or
-            man.Character:FindFirstChild("Humanoid") == nil then
+        if man.Character == nil or man.Character:FindFirstChild("HumanoidRootPart") == nil or man.Character:FindFirstChild("Humanoid") == nil then
             htxt = "Failed because manager is respawning"
         end
-        local target = man.Character.HumanoidRootPart
-        if man.Character.Humanoid.Sit then
+        local target = HumanoidRootPart
+        if Humanoid.Sit then
             htxt = "Failed because manager is sitting"
         end
         if htxt then
@@ -726,38 +739,25 @@ window1:Button("Become Manager", function()
     wait(0.3)
     humanoid.Jump = true
     wait(0.1)
-    player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(5, 5, 6)
+    HumanoidRootPart.CFrame = HumanoidRootPart.CFrame + Vector3.new(5, 5, 6)
 end)
 window1:Button("Autofarm Gui", function()
-    loadstring(game:HttpGet(
-        "https://gist.githubusercontent.com/TurkOyuncu99/9b9d62e9068d795f708c51551d439d21/raw/84a28a8d1fc501b9d200e8a2bd7cc831df0fbacf/gistfile1.txt",
-        true))()
-end)
-window3:Label("Teleport Area", Color3.fromRGB(127, 143, 166))
-window3:Button("Starting Zone", function()
-    Character.HumanoidRootPart.CFrame = CFrame.new(49, 3, 198)
-end)
-window3:Button("Cashier Area", function()
-    Character.HumanoidRootPart.CFrame = CFrame.new(48, 4, 80)
-end)
-window3:Button("Cook Area", function()
-    Character.HumanoidRootPart.CFrame = CFrame.new(42, 4, 61)
-end)
-window3:Button("Manager Area", function()
-    Character.HumanoidRootPart.CFrame = CFrame.new(37, 4, 3)
-end)
-window3:Button("Boxer Area", function()
-    Character.HumanoidRootPart.CFrame = CFrame.new(55, 4, 31)
-end)
-window3:Button("Supplier Area", function()
-    Character.HumanoidRootPart.CFrame = CFrame.new(8, 13, -1020)
-end)
-window3:Button("Delivery Area", function()
-    Character.HumanoidRootPart.CFrame = CFrame.new(64, 4, -17)
+    --loadstring(game:HttpGet("https://gist.githubusercontent.com/TurkOyuncu99/9b9d62e9068d795f708c51551d439d21/raw/84a28a8d1fc501b9d200e8a2bd7cc831df0fbacf/gistfile1.txt", true))()
+    loadstring(game:HttpGet("https://ayvacs.github.io/scripts/pizza-gist"))()
 end)
 
+window3:Label("Teleport Area", Color3.fromRGB(127, 143, 166))
+window3:Button("Starting Zone", function() HumanoidRootPart.CFrame = CFrame.new(49, 3, 198) end)
+window3:Button("Cashier Area", function() HumanoidRootPart.CFrame = CFrame.new(48, 4, 80) end)
+window3:Button("Cook Area", function() HumanoidRootPart.CFrame = CFrame.new(42, 4, 61) end)
+window3:Button("Manager Area", function() HumanoidRootPart.CFrame = CFrame.new(37, 4, 3) end)
+window3:Button("Boxer Area", function() HumanoidRootPart.CFrame = CFrame.new(55, 4, 31) end)
+window3:Button("Supplier Area", function() HumanoidRootPart.CFrame = CFrame.new(8, 13, -1020) end)
+window3:Button("Delivery Area", function() HumanoidRootPart.CFrame = CFrame.new(64, 4, -17) end)
+
 library:Keybind("Tab")
-game:GetService("StarterGui"):SetCore("SendNotification", {
+
+StarterGui:SetCore("SendNotification", {
     Title = "Important!",
     Text = "Ameicaa Was Here",
     Button1 = "LMAO",
